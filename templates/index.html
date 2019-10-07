@@ -37,6 +37,7 @@
                 image: base64Image
             }
             console.log(message);
+            {{ prediction_text }}
             <!-- $.post("http://localhost:5000/predict", JSON.stringify(message), function(response){ -->
                 <!-- $("#dog-prediction").text(response.prediction.dog.toFixed(6)); -->
                 <!-- $("#cat-prediction").text(response.prediction.cat.toFixed(6)); -->
