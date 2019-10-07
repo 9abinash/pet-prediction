@@ -1,35 +1,49 @@
 <!DOCTYPE html>
-<html >
-<!--From https://codepen.io/frytyler/pen/EGdtg-->
+<html>
 <head>
-  <meta charset="UTF-8">
-  <title>ML API</title>
-  <link href='https://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
-<link href='https://fonts.googleapis.com/css?family=Arimo' rel='stylesheet' type='text/css'>
-<link href='https://fonts.googleapis.com/css?family=Hind:300' rel='stylesheet' type='text/css'>
-<link href='https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300' rel='stylesheet' type='text/css'>
-  
+    <title>Abinash predict pet image app</title>
+    <style>
+        * {
+            font-size:30px;
+        }
+    </style>
 </head>
-
-<body>
- <div class="login">
-	<h1>Predict Salary Analysis</h1>
-
-     <!-- Main Input For Receiving Query to our ML -->
-    <form action="{{ url_for('predict')}}"method="post">
-    	<input type="text" name="experience" placeholder="Experience" required="required" />
-        <input type="text" name="test_score" placeholder="Test Score" required="required" />
-		<input type="text" name="interview_score" placeholder="Interview Score" required="required" />
-
-        <button type="submit" class="btn btn-primary btn-block btn-large">Predict</button>
-    </form>
-
-   <br>
-   <br>
-   {{ prediction_text }}
-
- </div>
-
-
+<body>    
+    <input id="image-selector" type="file">    
+    <button id="predict-button">Predict</button>
+    <p style="font-weight:bold">Predictions</p>    
+    <p>Dog: <span id="dog-prediction"></span></p>
+    <p>Cat: <span id="cat-prediction"></span></p>
+    <img id="selected-image" src=""/>
+       
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script>
+        let base64Image;
+        $("#image-selector").change(function() {
+            let reader = new FileReader();
+            reader.onload = function(e) {
+                let dataURL = reader.result;
+                $('#selected-image').attr("src", dataURL);
+                base64Image = dataURL.replace("data:image/png;base64,","");
+                console.log(base64Image);
+            }
+            reader.readAsDataURL($("#image-selector")[0].files[0]);
+            $("#dog-prediction").text("");
+            $("#cat-prediction").text("");
+        });
+        
+        $("#predict-button").click(function(){
+            let message = {
+                image: base64Image
+            }
+            console.log(message);
+            <!-- $.post("http://localhost:5000/predict", JSON.stringify(message), function(response){ -->
+                <!-- $("#dog-prediction").text(response.prediction.dog.toFixed(6)); -->
+                <!-- $("#cat-prediction").text(response.prediction.cat.toFixed(6)); -->
+                <!-- console.log(response); -->
+            });
+        });       
+    </script>
 </body>
 </html>
+
