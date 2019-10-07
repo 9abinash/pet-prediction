@@ -6,7 +6,7 @@ from keras.models import load_model
 
 app = Flask(__name__)
 #model = pickle.load(open('model.pkl', 'rb'))
-model = load_model('model_new.h5')
+model = load_model('my_model.h5')
 
 @app.route('/')
 def home():
@@ -42,9 +42,9 @@ def predict():
             'cat': prediction[0][1]
         }
     }
-    # jsonify(response)
-	return render_template('index.html', prediction_text='The pic you uploaded $ {}'.format(output))
-
+    output=jsonify(response)
+	#return render_template('index.html', prediction_text='The pic you uploaded $ {}'.format(output))
+	return 1
 
 if __name__ == "__main__":
     app.run(debug=True)
