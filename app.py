@@ -6,7 +6,7 @@ from keras.models import load_model
 
 app = Flask(__name__)
 #model = pickle.load(open('model.pkl', 'rb'))
-model = load_model('my_model.h5')
+model = load_model('model_new.h5')
 
 @app.route('/')
 def home():
@@ -14,16 +14,16 @@ def home():
 
 # @app.route('/predict',methods=['POST'])
 # def predict():
-    # '''
-    # For rendering results on HTML GUI
-    # '''
-    # int_features = [int(x) for x in request.form.values()]
-    # final_features = [np.array(int_features)]
-    # prediction = model.predict(final_features)
+#     '''
+#     For rendering results on HTML GUI
+#     '''
+#     int_features = [int(x) for x in request.form.values()]
+#     final_features = [np.array(int_features)]
+#     prediction = model.predict(final_features)
 
-    # output = round(prediction[0], 2)
+#     output = round(prediction[0], 2)
 
-    # return render_template('index.html', prediction_text='Employee Salary should be $ {}'.format(output))
+#     return render_template('index.html', prediction_text='Employee Salary should be $ {}'.format(output))
 	
 	
 @app.route("/predict", methods=["POST"])
@@ -42,9 +42,8 @@ def predict():
             'cat': prediction[0][1]
         }
     }
-    output=jsonify(response)
-	#return render_template('index.html', prediction_text='The pic you uploaded $ {}'.format(output))
-	return 1
+    #output=jsonify(response)
+    return render_template('index.html', prediction_text='The pic you uploaded $ {}'.format(response))
 
 if __name__ == "__main__":
     app.run(debug=True)
